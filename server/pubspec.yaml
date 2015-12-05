@@ -1,0 +1,21 @@
+name: 'server'
+version: 0.0.1
+description: A web server built using the shelf package.
+author: Jakub Danek <danek.ja@gmail.com>
+homepage: http://www.danekja.org
+
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+
+dependencies:
+  args: '>=0.10.0 <0.14.0'
+  redstone: '^0.6.1'
+  shelf: '>=0.6.0 <0.7.0'
+  shelf_static: any
+  redstone_mapper: any
+  mongo_dart: any
+  redstone_mapper_mongo: any
+  jaded: 0.1.9
+
+transformers:
+  - redstone_mapper
