@@ -17,6 +17,9 @@ pubspec.lock
 # Directory created by dartdoc
 doc/api/
 
+#files created by jaded
+jaded*
+
 # JetBrains IDEs (WebStorm and IDEA are the recomended Dart IDEs) 
 .idea/
 *.iml
