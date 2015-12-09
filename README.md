@@ -232,7 +232,6 @@ Thus it is possible to implement *any* class interface without actually inheriti
         }
         
         class ExtendedConsoleLogger extends ConsoleLogger {
-            //static checker raises error due to unimplemented method
             void log(String msg1, String msg2) { 
               super.log(msg1);
               super.log(msg2);
