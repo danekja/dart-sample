@@ -14,6 +14,8 @@ helloWorld() {
   return jade.renderFile("../web/jade/main.jade");
 }
 
+///Create db connection pool, open for the whole life of the application
+/// replace the localhost connection string with a proper one
 _setupDb() {
   var dbManager = new mongo.MongoDbManager("mongodb://localhost/dbname", poolSize: 3);
   app.addPlugin(mapper.getMapperPlugin(dbManager));

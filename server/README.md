@@ -281,11 +281,14 @@ the annotated interfaces.
         import 'package:redstone_mapper/plugin.dart' as mapper;
         import 'package:redstone_mapper_mongo/manager.dart' as mongo;
         
+        
+        ///Create db connection pool, open for the whole life of the application
+        /// replace the <url> with proper connection string
         _setupDb() {
           var dbManager = new mongo.MongoDbManager("mongodb://localhost/dbname", poolSize: 3);
           app.addPlugin(mapper.getMapperPlugin(dbManager));
         }
-        
+
     and call the method before `app.start();` in the `main` method.
 
 ### UI using Jade templating
