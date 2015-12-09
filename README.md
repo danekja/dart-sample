@@ -17,6 +17,12 @@ The material is organized in the following fashion:
 
 Full text of the license may be found in the attached LICENSE file.
 
+## Installation
+
+Dart offers [installation packages](https://www.dartlang.org/downloads/) for Windows, Mac and Linux.
+
+Please install the version **1.13.0**.
+
 ## Elementary Dart Concepts
 
 This section has been mainly extracted from the [Tour of the Dart Language](https://www.dartlang.org/docs/dart-up-and-running/ch02.html)
