@@ -61,7 +61,7 @@ All parameters may have default values given using `paramName: value`:
 
 or positional, encapsulated by square brackets `[]`:
 
-        void sayHello(String firstName, {String lastName : ""}) => print("Hello $firstName $lastName");
+        void sayHello(String firstName, [String lastName : ""]) => print("Hello $firstName $lastName");
                 
         sayHello("John");
         sayHello("John", "Doe");
