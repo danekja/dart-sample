@@ -96,7 +96,7 @@ and inside the `user.dart` file:
           @Id()
           String id;
         
-          ///Unique username
+          ///username
           @Field()
           @NotEmpty()
           String username;
@@ -180,7 +180,8 @@ Now we are going to implement persistence of users into the MongoDb database:
         import 'dart:async';
         
         import '../model/user.dart';
-        
+
+        ///Implementation of UserDao interface on top of MongoDB database
         class UserDao extends MongoDbService<User> {
           static const COLLECTION = "users";
         
@@ -211,16 +212,18 @@ Finally, the application logic for registration and exposure of the web service:
         import "../model/user.dart";
         import "../dao/user.dart";
         
-        @app.Group("/users")
+        @app.Group("/users") // group all inner endpoints under /users resource
         class UserService {
         
           UserDao _userDao;
         
           UserService(this._userDao);
         
-          @map.Encode()
-          @app.DefaultRoute(methods: const [app.POST])
-          Future<User> register(@map.Decode(from: const [app.FORM]) User user) async {
+          //the parameter annotation @map.Decode(from: const [app.FORM]) tells Redmine
+          //to automatically fill the user parameter with request data in FORM mimetype
+          @map.Encode() //tell redstone to automatically encode response User into JSON
+          @app.DefaultRoute(methods: const [app.POST]) //use same route path as parent group (/users)
+            Future<User> register(@map.Decode(from: const [app.FORM]) User user) async {
             //method validate from Redstone Mapper Schema class
             var err = user.validate();
             if(err != null) {
@@ -249,6 +252,7 @@ Finally, the application logic for registration and exposure of the web service:
             return _userDao.findAll();
           }
         
+          //this route handles /users/:id/ delete request
           @app.Route("/:id", methods: const [app.DELETE])
           delete(String id) {
             _userDao.delete(id);
@@ -263,12 +267,15 @@ the annotated interfaces.
 
 1. Add the following into the `bin/server.dart`:
 
+        //though unsused directly, the import is required for Redmine to discover registered
+        //routes
         import '../lib/service/user.dart';
 
 2. Register instances for DI, add the following into `bin/server.dart`
 
         import 'package:di/di.dart' as di;
-        
+
+        ///Register components for dependency injection.
         _di() {
           app.addModule(new di.Module()
                                 ..bind(UserDao));
@@ -506,6 +513,24 @@ with content:
             })
         }
 
+To tell our server to serve the static files (*frontend.js*), add this to the `bin/server.dart`:
+
+        //serve static files from the web folder
+        _serveStatic() {
+          app.setShelfHandler(createStaticHandler("../web",
+              serveFilesOutsidePath: true));
+        }
+
+and call it from the main function. The `main` function should currently look similar to this:
+
+        void main(List<String> args) {
+          _setupDb();
+          _di();
+          _serveStatic();
+        
+          app.setupConsoleLog();
+          app.start();
+        }
 
 ### Finished
 

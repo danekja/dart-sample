@@ -7,6 +7,8 @@ import 'package:redstone_mapper_mongo/manager.dart' as mongo;
 import 'package:shelf_static/shelf_static.dart';
 
 import '../lib/dao/user.dart';
+//though unsused directly, the import is required for Redmine to discover registered
+//routes
 import '../lib/service/user.dart';
 
 @app.Route("/", responseType: "text/html")
@@ -21,18 +23,22 @@ _setupDb() {
   app.addPlugin(mapper.getMapperPlugin(dbManager));
 }
 
+///Register components for dependency injection.
 _di() {
   app.addModule(new di.Module()
                         ..bind(UserDao));
 }
 
+//serve static files from the web folder
+_serveStatic() {
+  app.setShelfHandler(createStaticHandler("../web",
+      serveFilesOutsidePath: true));
+}
+
 void main(List<String> args) {
   _setupDb();
   _di();
-
-  app.setShelfHandler(createStaticHandler("../web",
-      serveFilesOutsidePath: true));
-
+  _serveStatic();
 
   app.setupConsoleLog();
   app.start();

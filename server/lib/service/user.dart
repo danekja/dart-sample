@@ -6,16 +6,18 @@ import 'package:redstone_mapper/plugin.dart' as map;
 import "../model/user.dart";
 import "../dao/user.dart";
 
-@app.Group("/users")
+@app.Group("/users") // group all inner endpoints under /users resource
 class UserService {
 
   UserDao _userDao;
 
   UserService(this._userDao);
 
-  @map.Encode()
-  @app.DefaultRoute(methods: const [app.POST])
-  Future<User> register(@map.Decode(from: const [app.FORM]) User user) async {
+  //the parameter annotation @map.Decode(from: const [app.FORM]) tells Redmine
+  //to automatically fill the user parameter with request data in FORM mimetype
+  @map.Encode() //tell redstone to automatically encode response User into JSON
+  @app.DefaultRoute(methods: const [app.POST]) //use same route path as parent group (/users)
+    Future<User> register(@map.Decode(from: const [app.FORM]) User user) async {
     //method validate from Redstone Mapper Schema class
     var err = user.validate();
     if(err != null) {
@@ -44,6 +46,7 @@ class UserService {
     return _userDao.findAll();
   }
 
+  //this route handles /users/:id/ delete request
   @app.Route("/:id", methods: const [app.DELETE])
   delete(String id) {
     _userDao.delete(id);

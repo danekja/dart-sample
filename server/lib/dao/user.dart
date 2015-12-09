@@ -6,6 +6,7 @@ import 'dart:async';
 
 import '../model/user.dart';
 
+///Implementation of UserDao interface on top of MongoDB database
 class UserDao extends MongoDbService<User> {
   static const COLLECTION = "users";
 

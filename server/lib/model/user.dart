@@ -10,7 +10,7 @@ class User extends Schema {
   @Id()
   String id;
 
-  ///Unique username
+  ///username
   @Field()
   @NotEmpty()
   String username;
