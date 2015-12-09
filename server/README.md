@@ -90,28 +90,19 @@ and inside the `user.dart` file:
 
         library dartws.user.model;
         
-        import 'package:redstone_mapper/mapper.dart';
-        import 'package:redstone_mapper_mongo/metadata.dart';
-        
         ///Entity representing application's user.
-        class User extends Schema {
+        class User {
         
           ///Primary key
-          @Id()
           String id;
         
           ///username
-          @Field()
-          @NotEmpty()
           String username;
         
           ///User's name
-          @Field()
           String name;
         
           ///User's email
-          @Field()
-          @NotEmpty()
           String email;
         
           /// Empty constructor
