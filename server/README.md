@@ -40,6 +40,10 @@ The `pubspec.yaml` file contains project meta-data as well as dependency specifi
 * [Redstone](https://github.com/redstone-dart/redstone) is an annotation driven web server micro-framework.
 * [Shelf](https://github.com/dart-lang/shelf) is web server middleware.
 
+To download the dependencies, run:
+
+        pub get
+
 ### Start Script
 
 Let's create a start script
