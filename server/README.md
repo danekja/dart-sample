@@ -80,7 +80,7 @@ Users are allowed to create any sub-directory structure within this basic layout
 
 ### User API
 
-Now our goals is to implement API for adding, listing and removing users. Initially, we need 
+Now our goal is to implement API for adding, listing and removing users. Initially, we need 
 User representation within our app:
 
         mkdir lib/model
@@ -118,9 +118,9 @@ and inside the `user.dart` file:
 
 for easy (de)serialization and validation we are going to use Redstone's mapping module:
 
-1. Add into the pubspec.yaml:
+1. Add into the pubspec.yaml, under "dependencies":
 
-        redstone_mapper: any
+          redstone_mapper: any
         
         transformers:
         - redstone_mapper
@@ -197,7 +197,8 @@ Now we are going to implement persistence of users into the MongoDb database:
           }
         }
 
-Finally, the application logic for registration and exposure of the web service:
+Finally, the application logic for registration and exposure of the web service;
+this should go into a `lib/service/user.dart` file:
 
         library dartws.user.service;
         
@@ -262,7 +263,7 @@ the annotated interfaces.
 
 1. Add the following into the `bin/server.dart`:
 
-        //though unsused directly, the import is required for Redmine to discover registered
+        //though unsused directly, the import is required for Redstone to discover registered
         //routes
         import '../lib/service/user.dart';
 
@@ -311,63 +312,63 @@ Now a jade template with simple view of our users, selected user's details and i
 
         touch web/jade/main.jade
 
-And the contents are:
+And the contents is:
 
-        doctype html
-        html
-            head
-                meta(charset='utf-8')
-                title Dart appka
-                link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
-                link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css", integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r", crossorigin="anonymous")
-                script(src='/js/frontend.js')
-            body
-                h1 Dart workshop
-                p Simple dart + redstone + jade + bootstrap + mongo application
-                div#wrapper
-        
-                    div#userInfo.col-md-3
-                        h2 User Details
-                        table.table
-                            tr
-                                td.col-md-1
-                                    strong Username:
-                                td#userInfoUsername
-                            tr
-                                td.col-md-1
-                                    strong Email:
-                                td#userInfoEmail
-                            tr
-                                td.col-md-1
-                                    strong Full Name:
-                                td#userInfoFullname
-        
-        
-        
-                    div#userList.col-md-4
-                        h2 User List
-                        table.table.table-striped.table-bordered
-                            thead
-                                th UserName
-                                th.col-md-3 Action
-                            tbody
-        
-                    div#addUser.col-md-3
-                        h2 Add New User
-                        p
-                            input#inputUserName.form-control(type='text', placeholder='Username')
-                        p
-                            input#inputUserEmail.form-control(type='text', placeholder='Email')
-                        p
-                            input#inputUserFullname.form-control(type='text', placeholder='Full Name')
-                        p
-                            button#btnAddUser.btn.btn-success Add User
-        
-        
-                script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
-                script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS", crossorigin="anonymous")
+    doctype html
+    html
+        head
+            meta(charset='utf-8')
+            title Dart appka
+            link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+            link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css", integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r", crossorigin="anonymous")
+            script(src='/js/frontend.js')
+        body
+            h1 Dart workshop
+            p Simple dart + redstone + jade + bootstrap + mongo application
+            div#wrapper
+    
+                div#userInfo.col-md-3
+                    h2 User Details
+                    table.table
+                        tr
+                            td.col-md-1
+                                strong Username:
+                            td#userInfoUsername
+                        tr
+                            td.col-md-1
+                                strong Email:
+                            td#userInfoEmail
+                        tr
+                            td.col-md-1
+                                strong Full Name:
+                            td#userInfoFullname
+    
+    
+    
+                div#userList.col-md-4
+                    h2 User List
+                    table.table.table-striped.table-bordered
+                        thead
+                            th UserName
+                            th.col-md-3 Action
+                        tbody
+    
+                div#addUser.col-md-3
+                    h2 Add New User
+                    p
+                        input#inputUserName.form-control(type='text', placeholder='Username')
+                    p
+                        input#inputUserEmail.form-control(type='text', placeholder='Email')
+                    p
+                        input#inputUserFullname.form-control(type='text', placeholder='Full Name')
+                    p
+                        button#btnAddUser.btn.btn-success Add User
+    
+    
+            script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
+            script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS", crossorigin="anonymous")
 
-Fron-end logic written in javascript (also by M. Bydzovsky):
+Front-end logic written in javascript (also by M. Bydzovsky):
 
         mkdir web/js/frontend.js
 
